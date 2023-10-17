@@ -88,7 +88,7 @@ const LayoutAdmin = () => {
                     icon: <UserOutlined />
                 }] : []),
                 ...(viewJob ? [{
-                    label: <Link to='/admin/job'>Job</Link>,
+                    label: <Link to='/admin/job'>Cuộc họp</Link>,
                     key: '/admin/job',
                     icon: <ScheduleOutlined />
                 }] : []),

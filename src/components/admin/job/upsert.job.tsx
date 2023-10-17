@@ -147,10 +147,10 @@ const ViewUpsertJob = (props: any) => {
                     separator=">"
                     items={[
                         {
-                            title: <Link to="/admin/job">Manage Job</Link>,
+                            title: <Link to="/admin/job">Manage Cuộc họp</Link>,
                         },
                         {
-                            title: 'Upsert Job',
+                            title: 'Upsert Cuộc họp',
                         },
                     ]}
                 />
@@ -165,7 +165,7 @@ const ViewUpsertJob = (props: any) => {
                             {
                                 searchConfig: {
                                     resetText: "Hủy",
-                                    submitText: <>{dataUpdate?._id ? "Cập nhật Job" : "Tạo mới Job"}</>
+                                    submitText: <>{dataUpdate?._id ? "Cập nhật Cuộc họp" : "Tạo mới Cuộc họp"}</>
                                 },
                                 onReset: () => navigate('/admin/job'),
                                 render: (_: any, dom: any) => <FooterToolbar>{dom}</FooterToolbar>,
@@ -178,12 +178,12 @@ const ViewUpsertJob = (props: any) => {
                         <Row gutter={[20, 20]}>
                             <Col span={24} md={12}>
                                 <ProFormText
-                                    label="Tên Job"
+                                    label="Tên Cuộc họp"
                                     name="name"
                                     rules={[
                                         { required: true, message: 'Vui lòng không bỏ trống' },
                                     ]}
-                                    placeholder="Nhập tên job"
+                                    placeholder="Nhập tên Cuộc họp"
                                 />
                             </Col>
                             <Col span={24} md={6}>
