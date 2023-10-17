@@ -24,7 +24,7 @@ const SearchClient = () => {
             }
         >
             <Row gutter={[20, 20]}>
-                <Col span={24}><h2>Tìm kiếm phản ánh kiến nghị</h2></Col>
+                <Col span={24}><h2>Tìm kiếm Cuộc họp</h2></Col>
                 <Col span={24} md={16}>
                     <ProForm.Item
                         name="skills"
@@ -36,7 +36,7 @@ const SearchClient = () => {
                             style={{ width: '100%' }}
                             placeholder={
                                 <>
-                                    <MonitorOutlined /> Tìm theo lĩnh vực...
+                                    <MonitorOutlined /> Tìm theo chức năng...
                                 </>
                             }
                             optionLabelProp="label"

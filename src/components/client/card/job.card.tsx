@@ -74,7 +74,7 @@ const JobCard = (props: IProps) => {
                     <Row gutter={[20, 20]}>
                         <Col span={24}>
                             <div className={isMobile ? styles["dflex-mobile"] : styles["dflex-pc"]}>
-                                <span className={styles["title"]}>Phản ánh kiến nghị</span>
+                                <span className={styles["title"]}>Cuộc họp</span>
                                 {!showPagination &&
                                     <Link to="job">Xem tất cả</Link>
                                 }
@@ -97,8 +97,8 @@ const JobCard = (props: IProps) => {
                                             <div className={styles["card-job-right"]}>
                                                 <div className={styles["job-title"]}>{item.name}</div>
                                                 <div className={styles["job-location"]}><EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{getLocationName(item.location)}</div>
-                                                <div><ThunderboltOutlined style={{ color: 'orange' }} />&nbsp;{(item.salary + "")?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ</div>
-                                                <div className={styles["job-updatedAt"]}>{dayjs(item.updatedAt).fromNow()}</div>
+                                                <div><ThunderboltOutlined style={{ color: 'orange' }} />&nbsp;{(item.salary + "")?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} m</div>
+                                                {/* <div className={styles["job-updatedAt"]}>{dayjs(item.updatedAt).fromNow()}</div> */}
                                             </div>
                                         </div>
 

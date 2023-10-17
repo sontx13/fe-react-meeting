@@ -189,10 +189,10 @@ const ViewUpsertJob = (props: any) => {
                             <Col span={24} md={6}>
                                 <ProFormSelect
                                     name="skills"
-                                    label="Kỹ năng yêu cầu"
+                                    label="Chức năng yêu cầu"
                                     options={SKILLS_LIST}
                                     placeholder="Please select a skill"
-                                    rules={[{ required: true, message: 'Vui lòng chọn kỹ năng!' }]}
+                                    rules={[{ required: true, message: 'Vui lòng chọn chức năng!' }]}
                                     allowClear
                                     mode="multiple"
                                     fieldProps={{
@@ -212,12 +212,12 @@ const ViewUpsertJob = (props: any) => {
                             </Col>
                             <Col span={24} md={6}>
                                 <ProFormDigit
-                                    label="Mức lương"
+                                    label="Khoảng cách"
                                     name="salary"
                                     rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
-                                    placeholder="Nhập mức lương"
+                                    placeholder="Nhập Khoảng cách"
                                     fieldProps={{
-                                        addonAfter: " đ",
+                                        addonAfter: " m",
                                         formatter: (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
                                         parser: (value) => +(value || '').replace(/\$\s?|(,*)/g, '')
                                     }}
@@ -234,16 +234,16 @@ const ViewUpsertJob = (props: any) => {
                             <Col span={24} md={6}>
                                 <ProFormSelect
                                     name="level"
-                                    label="Trình độ"
+                                    label="Màu sắc"
                                     valueEnum={{
-                                        INTERN: 'INTERN',
-                                        FRESHER: 'FRESHER',
-                                        JUNIOR: 'JUNIOR',
-                                        MIDDLE: 'MIDDLE',
-                                        SENIOR: 'SENIOR',
+                                         RED: 'RED',
+                                        BLUE: 'BLUE',
+                                        GREEN: 'GREEN',
+                                        YELLOW: 'YELLOW',
+                                        ORANGE: 'ORANGE',
                                     }}
-                                    placeholder="Please select a level"
-                                    rules={[{ required: true, message: 'Vui lòng chọn level!' }]}
+                                    placeholder="Please select a color"
+                                    rules={[{ required: true, message: 'Vui lòng chọn màu sắc!' }]}
                                 />
                             </Col>
 

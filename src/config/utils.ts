@@ -2,16 +2,16 @@ import { grey, green, blue, red, orange } from '@ant-design/colors';
 
 export const SKILLS_LIST =
     [
-        { label: "React.JS", value: "REACT.JS" },
-        { label: "React Native", value: "REACT NATIVE" },
-        { label: "Vue.JS", value: "VUE.JS" },
-        { label: "Angular", value: "ANGULAR" },
-        { label: "Nest.JS", value: "NEST.JS" },
-        { label: "TypeScript", value: "TYPESCRIPT" },
-        { label: "Java", value: "JAVA" },
-        { label: "Frontend", value: "FRONTEND" },
-        { label: "Backend", value: "BACKEND" },
-        { label: "Fullstack", value: "FULLSTACK" }
+        { label: "Điểm danh vị trí", value: "DIEM_DANH" },
+        { label: "Xem tài liệu", value: "XEM_TAI_LIEU" },
+        { label: "Bình chọn", value: "BINH_CHON" },
+        { label: "Khảo sát", value: "KHAO_SAT" },
+        { label: "Gửi phản ánh", value: "GUI_PHAN_ANH" },
+        { label: "Tin tức", value: "TIN_TUC" },
+        { label: "Thông báo", value: "THONG_BAO" },
+        { label: "Thông tin", value: "THONG_TIN" },
+        { label: "Gửi báo cáo", value: "GUI_BAO_CAO" },
+        { label: "Yêu cầu số điện thoại", value: "SDT" }
     ];
 
 export const LOCATION_LIST =

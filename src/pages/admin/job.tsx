@@ -61,16 +61,16 @@ const JobPage = () => {
             sorter: true,
         },
         {
-            title: 'Mức lương',
+            title: 'Khoảng cách',
             dataIndex: 'salary',
             sorter: true,
             render(dom, entity, index, action, schema) {
                 const str = "" + entity.salary;
-                return <>{str?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ</>
+                return <>{str?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} m</>
             },
         },
         {
-            title: 'Level',
+            title: 'Màu sắc',
             dataIndex: 'level',
             renderFormItem: (item, props, form) => (
                 <ProFormSelect
@@ -78,13 +78,13 @@ const JobPage = () => {
                     mode="multiple"
                     allowClear
                     valueEnum={{
-                        INTERN: 'INTERN',
-                        FRESHER: 'FRESHER',
-                        JUNIOR: 'JUNIOR',
-                        MIDDLE: 'MIDDLE',
-                        SENIOR: 'SENIOR',
+                        RED: 'RED',
+                        BLUE: 'BLUE',
+                        GREEN: 'GREEN',
+                        YELLOW: 'YELLOW',
+                        ORANGE: 'ORANGE',
                     }}
-                    placeholder="Chọn level"
+                    placeholder="Chọn màu sắc"
                 />
             ),
         },

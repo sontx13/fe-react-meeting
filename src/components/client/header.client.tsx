@@ -36,7 +36,7 @@ const Header = (props: any) => {
             icon: <TwitterOutlined />,
         },
         {
-            label: <Link to={'/job'}>Phản ánh kiến nghị</Link>,
+            label: <Link to={'/job'}>Cuộc họp</Link>,
             key: '/job',
             icon: <CodeOutlined />,
         },
