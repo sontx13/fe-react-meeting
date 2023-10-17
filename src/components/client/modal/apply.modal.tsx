@@ -38,7 +38,7 @@ const ApplyModal = (props: IProps) => {
             if (jobDetail) {
                 const res = await callCreateResume(urlCV, jobDetail?.company?._id, jobDetail?._id);
                 if (res.data) {
-                    message.success("Rải CV thành công!");
+                    message.success("Gửi tài liệu thành công!");
                     setIsModalOpen(false);
                 } else {
                     notification.error({
@@ -82,12 +82,12 @@ const ApplyModal = (props: IProps) => {
 
     return (
         <>
-            <Modal title="Ứng Tuyển Job"
+            <Modal title="Gửi tài liệu"
                 open={isModalOpen}
                 onOk={() => handleOkButton()}
                 onCancel={() => setIsModalOpen(false)}
                 maskClosable={false}
-                okText={isAuthenticated ? "Rải CV Nào " : "Đăng Nhập Nhanh"}
+                okText={isAuthenticated ? "Gửi file " : "Đăng Nhập Nhanh"}
                 cancelButtonProps={
                     { style: { display: "none" } }
                 }
@@ -105,7 +105,7 @@ const ApplyModal = (props: IProps) => {
                                 <Row gutter={[10, 10]}>
                                     <Col span={24}>
                                         <div>
-                                            Bạn đang ứng tuyển công việc <b>{jobDetail?.name} </b>tại  <b>{jobDetail?.company?.name}</b>
+                                            Bạn đang gửi tài liệu <b>{jobDetail?.name} </b>tại  <b>{jobDetail?.company?.name}</b>
                                         </div>
                                     </Col>
                                     <Col span={24}>
@@ -122,12 +122,12 @@ const ApplyModal = (props: IProps) => {
                                     </Col>
                                     <Col span={24}>
                                         <ProForm.Item
-                                            label={"Upload file CV"}
+                                            label={"Upload file"}
                                             rules={[{ required: true, message: 'Vui lòng upload file!' }]}
                                         >
 
                                             <Upload {...propsUpload}>
-                                                <Button icon={<UploadOutlined />}>Tải lên CV của bạn ( Hỗ trợ *.doc, *.docx, *.pdf, and &lt; 5MB )</Button>
+                                                <Button icon={<UploadOutlined />}>Tải lên file của bạn ( Hỗ trợ *.doc, *.docx, *.pdf, and &lt; 5MB )</Button>
                                             </Upload>
                                         </ProForm.Item>
                                     </Col>
@@ -138,7 +138,7 @@ const ApplyModal = (props: IProps) => {
                     </div>
                     :
                     <div>
-                        Bạn chưa đăng nhập hệ thống. Vui lòng đăng nhập để có thể "Rải CV" bạn nhé -.-
+                        Bạn chưa đăng nhập hệ thống. Vui lòng đăng nhập để có thể "Gửi file" bạn nhé -.-
                     </div>
                 }
                 <Divider />
