@@ -78,7 +78,7 @@ const ViewDetailAttendance = (props: IProps) => {
                         {dataInit?.longitude}
                     </Descriptions.Item>
                     
-                    <Descriptions.Item label="Trạng thái">
+                    {/* <Descriptions.Item label="Trạng thái">
                         <Tag color={dataInit.isActive ? "lime" : "red"} >
                              {dataInit.isActive ? "Đã điểm danh" : "Chưa điểm danh"}
                         </Tag>
@@ -88,7 +88,7 @@ const ViewDetailAttendance = (props: IProps) => {
                     </Descriptions.Item>
                     <Descriptions.Item label="Đơn vị">
                         {dataInit?.companyId?.name}
-                    </Descriptions.Item>
+                    </Descriptions.Item> */}
                     <Descriptions.Item label="Ngày tạo">{dataInit && dataInit.createdAt ? dayjs(dataInit.createdAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
                     <Descriptions.Item label="Ngày sửa">{dataInit && dataInit.updatedAt ? dayjs(dataInit.updatedAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
 

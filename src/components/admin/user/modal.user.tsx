@@ -20,6 +20,12 @@ export interface ICompanySelect {
     key?: string;
 }
 
+export interface IJobSelect {
+    label: string;
+    value: string;
+    key?: string;
+}
+
 const ModalUser = (props: IProps) => {
     const { openModal, setOpenModal, reloadTable, dataInit, setDataInit } = props;
     const [companies, setCompanies] = useState<ICompanySelect[]>([]);

@@ -56,41 +56,13 @@ const VotePage = () => {
             hideInSearch: true,
         },
         {
-            title: 'Cuộc họp',
-            dataIndex: 'name',
+            title: 'Câu hỏi',
+            dataIndex: 'question',
             sorter: true,
-        },
-        {
-            title: 'Khoảng cách',
-            dataIndex: 'salary',
-            sorter: true,
-            render(dom, entity, index, action, schema) {
-                const str = "" + entity.question;
-                return <>{str?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} m</>
-            },
-        },
-        {
-            title: 'Màu sắc',
-            dataIndex: 'level',
-            renderFormItem: (item, props, form) => (
-                <ProFormSelect
-                    showSearch
-                    mode="multiple"
-                    allowClear
-                    valueEnum={{
-                        RED: 'RED',
-                        BLUE: 'BLUE',
-                        GREEN: 'GREEN',
-                        YELLOW: 'YELLOW',
-                        ORANGE: 'ORANGE',
-                    }}
-                    placeholder="Chọn màu sắc"
-                />
-            ),
         },
         {
             title: 'Trạng thái',
-            dataIndex: 'isActive',
+            dataIndex: 'status',
             render(dom, entity, index, action, schema) {
                 return <>
                     <Tag color={entity.status ? "lime" : "red"} >
@@ -101,6 +73,16 @@ const VotePage = () => {
             hideInSearch: true,
         },
 
+        {
+           title: 'Cuộc họp',
+            dataIndex: ["jobId", "name"],
+            hideInSearch: true,
+        },
+        {
+            title: 'Đơn vị',
+            dataIndex: ["companyId", "name"],
+            hideInSearch: true,
+        },
         {
             title: 'Ngày tạo',
             dataIndex: 'createdAt',
@@ -113,18 +95,18 @@ const VotePage = () => {
             },
             hideInSearch: true,
         },
-        {
-            title: 'Ngày sửa',
-            dataIndex: 'updatedAt',
-            width: 200,
-            sorter: true,
-            render: (text, record, index, action) => {
-                return (
-                    <>{dayjs(record.updatedAt).format('DD-MM-YYYY HH:mm:ss')}</>
-                )
-            },
-            hideInSearch: true,
-        },
+        // {
+        //     title: 'Ngày sửa',
+        //     dataIndex: 'updatedAt',
+        //     width: 200,
+        //     sorter: true,
+        //     render: (text, record, index, action) => {
+        //         return (
+        //             <>{dayjs(record.updatedAt).format('DD-MM-YYYY HH:mm:ss')}</>
+        //         )
+        //     },
+        //     hideInSearch: true,
+        // },
         {
 
             title: 'Actions',
@@ -205,7 +187,7 @@ const VotePage = () => {
         } else {
             temp = `${temp}&${sortBy}`;
         }
-
+        temp += "&populate=companyId,jobId&fields=companyId._id, companyId.name, companyId.logo, jobId._id, jobId.name";
         return temp;
     }
 

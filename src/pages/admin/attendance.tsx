@@ -45,22 +45,22 @@ const AttendancePage = () => {
     }
 
     const columns: ProColumns<IAttendance>[] = [
-        {
-            title: 'Id',
-            dataIndex: '_id',
-            width: 250,
-            render: (text, record, index, action) => {
-                return (
-                    <a href="#" onClick={() => {
-                        setOpenViewDetail(true);
-                        setDataInit(record);
-                    }}>
-                        {record._id}
-                    </a>
-                )
-            },
-            hideInSearch: true,
-        },
+        // {
+        //     title: 'Id',
+        //     dataIndex: '_id',
+        //     width: 250,
+        //     render: (text, record, index, action) => {
+        //         return (
+        //             <a href="#" onClick={() => {
+        //                 setOpenViewDetail(true);
+        //                 setDataInit(record);
+        //             }}>
+        //                 {record._id}
+        //             </a>
+        //         )
+        //     },
+        //     hideInSearch: true,
+        // },
         {
             title: 'Tên zalo',
             dataIndex: 'name',

@@ -3,10 +3,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { DebounceSelect } from "../user/debouce.select";
 import { FooterToolbar, ProForm, ProFormDatePicker, ProFormDigit, ProFormSelect, ProFormSwitch, ProFormText } from "@ant-design/pro-components";
 import styles from 'styles/admin.module.scss';
-import { LOCATION_LIST, SKILLS_LIST } from "@/config/utils";
-import { ICompanySelect } from "../user/modal.user";
 import { useState, useEffect } from 'react';
-import { callCreateVote, callFetchCompany, callFetchVoteById, callUpdateVote } from "@/config/api";
+import { callCreateVote, callFetchCompany, callFetchJob, callFetchVoteById, callUpdateVote } from "@/config/api";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { CheckSquareOutlined } from "@ant-design/icons";
@@ -15,7 +13,8 @@ import dayjs from 'dayjs';
 import { IVote } from "@/types/backend";
 
 const ViewUpsertVote = (props: any) => {
-    const [companies, setCompanies] = useState<ICompanySelect[]>([]);
+    const [companies, setCompanies] = useState<any>([]);
+    const [jobs, setJobs] = useState<any>([]);
 
     const navigate = useNavigate();
     const [value, setValue] = useState<string>("");
@@ -31,23 +30,13 @@ const ViewUpsertVote = (props: any) => {
             if (id) {
                 const res = await callFetchVoteById(id);
                 if (res && res.data) {
+                    console.log(res.data)
                     setDataUpdate(res.data);
-                    setValue(res.data.question);
-                    setCompanies([
-                        {
-                            label: res.data.companyId as string,
-                            value: `${res.data.companyId}` as string,
-                            key: res.data.companyId
-                        }
-                    ])
-
+        
                     form.setFieldsValue({
                         ...res.data,
-                        company: {
-                            label: res.data.companyId as string,
-                            value: `${res.data.companyId}` as string,
-                            key: res.data.companyId
-                        },
+                        companyId: res.data.companyId as string,
+                        jobId:res.data.jobId as string,
 
                     })
                 }
@@ -58,14 +47,29 @@ const ViewUpsertVote = (props: any) => {
     }, [id])
 
     // Usage of DebounceSelect
-    async function fetchCompanyList(name: string): Promise<ICompanySelect[]> {
+    async function fetchCompanyList(name: string): Promise<any> {
         const res = await callFetchCompany(`current=1&pageSize=100&name=/${name}/i`);
         if (res && res.data) {
             const list = res.data.result;
             const temp = list.map(item => {
                 return {
                     label: item.name as string,
-                    value: `${item._id}@#$${item.logo}` as string
+                    value: item._id as string
+                }
+            })
+            return temp;
+        } else return [];
+    }
+
+     // Usage of DebounceSelect
+    async function fetchJobList(name: string): Promise<any> {
+        const res = await callFetchJob(`current=1&pageSize=100&name=/${name}/i`);
+        if (res && res.data) {
+            const list = res.data.result;
+            const temp = list.map(item => {
+                return {
+                    label: item.name as string,
+                    value: item._id as string
                 }
             })
             return temp;
@@ -73,14 +77,16 @@ const ViewUpsertVote = (props: any) => {
     }
 
     const onFinish = async (values: any) => {
+          console.log(values);
         if (dataUpdate?._id) {
             //update
             const vote = {
                 question: values.question,
                 status: values.status,
-                companyId: values.companyId,
-                jobId: values.jobId,
+                companyId: values.companyId.key,
+                jobId: values.jobId.key,
             }
+             console.log(vote);
 
             const res = await callUpdateVote(vote, dataUpdate._id);
             if (res.data) {
@@ -93,13 +99,15 @@ const ViewUpsertVote = (props: any) => {
                 });
             }
         } else {
+           
             //create
             const vote = {
                 question: values.question,
                 status: values.status,
-                companyId: values.companyId,
-                jobId: values.jobId,
+                companyId: values.companyId.key,
+                jobId: values.jobId.key,
             }
+            console.log(vote);
 
             const res = await callCreateVote(vote);
             if (res.data) {
@@ -117,16 +125,16 @@ const ViewUpsertVote = (props: any) => {
 
 
     return (
-        <div className={styles["upsert-vote-container"]}>
+        <div className={styles["upsert-job-container"]}>
             <div className={styles["title"]}>
                 <Breadcrumb
                     separator=">"
                     items={[
                         {
-                            title: <Link to="/admin/vote">Manage Cuộc họp</Link>,
+                            title: <Link to="/admin/vote">Manage Biểu quyết</Link>,
                         },
                         {
-                            title: 'Upsert Cuộc họp',
+                            title: 'Upsert Biểu quyết',
                         },
                     ]}
                 />
@@ -141,7 +149,7 @@ const ViewUpsertVote = (props: any) => {
                             {
                                 searchConfig: {
                                     resetText: "Hủy",
-                                    submitText: <>{dataUpdate?._id ? "Cập nhật Cuộc họp" : "Tạo mới Cuộc họp"}</>
+                                    submitText: <>{dataUpdate?._id ? "Cập nhật Biểu quyết" : "Tạo mới Biểu quyết"}</>
                                 },
                                 onReset: () => navigate('/admin/vote'),
                                 render: (_: any, dom: any) => <FooterToolbar>{dom}</FooterToolbar>,
@@ -152,94 +160,34 @@ const ViewUpsertVote = (props: any) => {
                         }
                     >
                         <Row gutter={[20, 20]}>
-                            <Col span={24} md={12}>
+                            <Col span={24} md={6}>
                                 <ProFormText
                                     label="Câu hỏi"
                                     name="question"
                                     rules={[
                                         { required: true, message: 'Vui lòng không bỏ trống' },
                                     ]}
-                                    placeholder="Nhập tên Cuộc họp"
-                                />
-                            </Col>
-                            <Col span={24} md={6}>
-                                <ProFormSelect
-                                    name="skills"
-                                    label="Chức năng yêu cầu"
-                                    options={SKILLS_LIST}
-                                    placeholder="Please select a skill"
-                                    rules={[{ required: true, message: 'Vui lòng chọn chức năng!' }]}
-                                    allowClear
-                                    mode="multiple"
-                                    fieldProps={{
-                                        showArrow: false
-                                    }}
-
-                                />
-                            </Col>
-                            <Col span={24} md={6}>
-                                <ProFormSelect
-                                    name="location"
-                                    label="Địa điểm"
-                                    options={LOCATION_LIST.filter(item => item.value !== 'ALL')}
-                                    placeholder="Please select a location"
-                                    rules={[{ required: true, message: 'Vui lòng chọn địa điểm!' }]}
-                                />
-                            </Col>
-                            <Col span={24} md={6}>
-                                <ProFormDigit
-                                    label="Khoảng cách"
-                                    name="salary"
-                                    rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
-                                    placeholder="Nhập Khoảng cách"
-                                    fieldProps={{
-                                        addonAfter: " m",
-                                        formatter: (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-                                        parser: (value) => +(value || '').replace(/\$\s?|(,*)/g, '')
-                                    }}
-                                />
-                            </Col>
-                            <Col span={24} md={6}>
-                                <ProFormDigit
-                                    label="Số lượng"
-                                    name="quantity"
-                                    rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
-                                    placeholder="Nhập số lượng"
-                                />
-                            </Col>
-                            <Col span={24} md={6}>
-                                <ProFormSelect
-                                    name="status"
-                                    label="Màu sắc"
-                                    valueEnum={{
-                                         RED: 'RED',
-                                        BLUE: 'BLUE',
-                                        GREEN: 'GREEN',
-                                        YELLOW: 'YELLOW',
-                                        ORANGE: 'ORANGE',
-                                    }}
-                                    placeholder="Please select a color"
-                                    rules={[{ required: true, message: 'Vui lòng chọn màu sắc!' }]}
+                                    placeholder="Nhập tên Biểu quyết"
                                 />
                             </Col>
 
-                            {(dataUpdate?._id || !id) &&
+                             {(dataUpdate?._id || !id) &&
                                 <Col span={24} md={6}>
                                     <ProForm.Item
-                                        name="company"
-                                        label="Thuộc Công Ty"
-                                        rules={[{ required: true, message: 'Vui lòng chọn company!' }]}
+                                        name="jobId"
+                                        label="Cuộc họp"
+                                        rules={[{ required: true, message: 'Vui lòng chọn cuộc họp!' }]}
                                     >
                                         <DebounceSelect
                                             allowClear
                                             showSearch
-                                            defaultValue={companies}
-                                            value={companies}
-                                            placeholder="Chọn công ty"
-                                            fetchOptions={fetchCompanyList}
+                                            defaultValue={jobs}
+                                            value={jobs}
+                                            placeholder="Chọn cuộc họp"
+                                            fetchOptions={fetchJobList}
                                             onChange={(newValue: any) => {
                                                 if (newValue?.length === 0 || newValue?.length === 1) {
-                                                    setCompanies(newValue as ICompanySelect[]);
+                                                    setJobs(newValue);
                                                 }
                                             }}
                                             style={{ width: '100%' }}
@@ -249,12 +197,36 @@ const ViewUpsertVote = (props: any) => {
                                 </Col>
                             }
 
-                        </Row>
-                        <Row gutter={[20, 20]}>
+
+                            {(dataUpdate?._id || !id) &&
+                                <Col span={24} md={6}>
+                                    <ProForm.Item
+                                        name="companyId"
+                                        label="Công Ty"
+                                        rules={[{ required: true, message: 'Vui lòng chọn đơn vị!' }]}
+                                    >
+                                        <DebounceSelect
+                                            allowClear
+                                            showSearch
+                                            defaultValue={companies}
+                                            value={companies}
+                                            placeholder="Chọn đơn vị"
+                                            fetchOptions={fetchCompanyList}
+                                            onChange={(newValue: any) => {
+                                                if (newValue?.length === 0 || newValue?.length === 1) {
+                                                    setCompanies(newValue);
+                                                }
+                                            }}
+                                            style={{ width: '100%' }}
+                                        />
+                                    </ProForm.Item>
+
+                                </Col>
+                            }
                             <Col span={24} md={6}>
                                 <ProFormSwitch
                                     label="Trạng thái"
-                                    name="isActive"
+                                    name="status"
                                     checkedChildren="ACTIVE"
                                     unCheckedChildren="INACTIVE"
                                     initialValue={true}
@@ -264,6 +236,7 @@ const ViewUpsertVote = (props: any) => {
                                 />
                             </Col>
                         </Row>
+                        
                         <Divider />
                     </ProForm>
                 </ConfigProvider>

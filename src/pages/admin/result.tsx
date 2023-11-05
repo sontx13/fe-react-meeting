@@ -45,53 +45,44 @@ const ResultPage = () => {
     }
 
     const columns: ProColumns<IResult>[] = [
+        // {
+        //     title: 'Id',
+        //     dataIndex: '_id',
+        //     width: 250,
+        //     render: (text, record, index, action) => {
+        //         return (
+        //             <a href="#" onClick={() => {
+        //                 setOpenViewDetail(true);
+        //                 setDataInit(record);
+        //             }}>
+        //                 {record._id}
+        //             </a>
+        //         )
+        //     },
+        //     hideInSearch: true,
+        // },
+      
         {
-            title: 'Id',
-            dataIndex: '_id',
-            width: 250,
-            render: (text, record, index, action) => {
-                return (
-                    <a href="#" onClick={() => {
-                        setOpenViewDetail(true);
-                        setDataInit(record);
-                    }}>
-                        {record._id}
-                    </a>
-                )
-            },
-            hideInSearch: true,
-        },
-        {
-            title: 'Trạng Thái',
-            dataIndex: 'status',
+            title: 'Tên Zalo',
+            dataIndex: 'name',
             sorter: true,
-            renderFormItem: (item, props, form) => (
-                <ProFormSelect
-                    showSearch
-                    mode="multiple"
-                    allowClear
-                    valueEnum={{
-                        PENDING: 'PENDING',
-                        REVIEWING: 'REVIEWING',
-                        APPROVED: 'APPROVED',
-                        REJECTED: 'REJECTED',
-                    }}
-                    placeholder="Chọn level"
-                />
-            ),
+        },
+        {
+            title: 'Số đt',
+            dataIndex: 'phone',
+            sorter: true,
         },
 
         {
-           title: 'Cuộc họp',
-            dataIndex: ["jobId", "name"],
+           title: 'Biểu quyết',
+            dataIndex: ["voteId", "question"],
             hideInSearch: true,
         },
         {
-            title: 'Đơn vị',
-            dataIndex: ["companyId", "name"],
-            hideInSearch: true,
+            title: 'Câu trả lời',
+            dataIndex: 'answer',
+            sorter: true,
         },
-
         {
             title: 'Ngày tạo',
             dataIndex: 'createdAt',
@@ -186,7 +177,7 @@ const ResultPage = () => {
             temp = `${temp}&${sortBy}`;
         }
 
-        //temp += "&populate=companyId,jobId&fields=companyId._id, companyId.name, companyId.logo, jobId._id, jobId.name";
+        temp += "&populate=voteId&fields=voteId._id, voteId.question, voteId.status";
         return temp;
     }
 

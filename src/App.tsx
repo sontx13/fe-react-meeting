@@ -31,6 +31,7 @@ import ClientJobDetailPage from './pages/job/detail';
 import ClientCompanyPage from './pages/company';
 import ClientCompanyDetailPage from './pages/company/detail';
 import VotePage from './pages/admin/vote';
+import ViewUpsertVote from './components/admin/vote/upsert.vote';
 import ResultPage from './pages/admin/result';
 import AttendancePage from './pages/admin/attendance';
 
@@ -133,10 +134,16 @@ export default function App() {
         },
         {
           path: "vote",
-          element:
-            <ProtectedRoute>
-              <VotePage />
-            </ProtectedRoute>
+          children: [
+            {
+              index: true,
+              element: <ProtectedRoute> <VotePage /></ProtectedRoute>
+            },
+            {
+              path: "upsert", element:
+                <ProtectedRoute><ViewUpsertVote /></ProtectedRoute>
+            }
+          ]
         },
         {
           path: "result",
