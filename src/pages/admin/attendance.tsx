@@ -62,60 +62,76 @@ const AttendancePage = () => {
             hideInSearch: true,
         },
         {
-            title: 'Trạng Thái',
-            dataIndex: 'status',
-            sorter: true,
-            renderFormItem: (item, props, form) => (
-                <ProFormSelect
-                    showSearch
-                    mode="multiple"
-                    allowClear
-                    valueEnum={{
-                        PENDING: 'PENDING',
-                        REVIEWING: 'REVIEWING',
-                        APPROVED: 'APPROVED',
-                        REJECTED: 'REJECTED',
-                    }}
-                    placeholder="Chọn level"
-                />
-            ),
-        },
-
+            title: 'Tên zalo',
+            dataIndex: 'name',
+        }
+        ,
         {
-            title: 'Job',
-            dataIndex: ["jobId", "name"],
+            title: 'Trạng thái',
+            dataIndex: 'isActive',
+            render(dom, entity, index, action, schema) {
+                return <>
+                    <Tag color={entity.isActive ? "lime" : "red"} >
+                        {entity.isActive ? "Đã điểm danh" : "Chưa điểm danh"}
+                    </Tag>
+                </>
+            },
+            hideInSearch: true,
+        },
+         {
+            title: 'Latitude',
+            dataIndex: "latitude",
+            hideInSearch: true,
+        },
+       
+        {
+            title: 'Longitude',
+            dataIndex: "longitude",
             hideInSearch: true,
         },
         {
-            title: 'Company',
+            title: 'Thời gian gửi',
+            dataIndex: 'timestamp',
+            width: 200,
+            sorter: true,
+            render: (text, record, index, action) => {
+                return (
+                    <>{dayjs(record.timestamp).format('DD-MM-YYYY HH:mm:ss')}</>
+                )
+            },
+            hideInSearch: true,
+        },
+
+        {
+            title: 'Đơn vị',
             dataIndex: ["companyId", "name"],
             hideInSearch: true,
         },
 
-        {
-            title: 'CreatedAt',
-            dataIndex: 'createdAt',
-            width: 200,
-            sorter: true,
-            render: (text, record, index, action) => {
-                return (
-                    <>{dayjs(record.createdAt).format('DD-MM-YYYY HH:mm:ss')}</>
-                )
-            },
-            hideInSearch: true,
-        },
-        {
-            title: 'UpdatedAt',
-            dataIndex: 'updatedAt',
-            width: 200,
-            sorter: true,
-            render: (text, record, index, action) => {
-                return (
-                    <>{dayjs(record.updatedAt).format('DD-MM-YYYY HH:mm:ss')}</>
-                )
-            },
-            hideInSearch: true,
-        },
+        // {
+        //     title: 'Ngày tạo',
+        //     dataIndex: 'createdAt',
+        //     width: 200,
+        //     sorter: true,
+        //     render: (text, record, index, action) => {
+        //         return (
+        //             <>{dayjs(record.createdAt).format('DD-MM-YYYY HH:mm:ss')}</>
+        //         )
+        //     },
+        //     hideInSearch: true,
+        // },
+        // {
+        //     title: 'Ngày sửa',
+        //     dataIndex: 'updatedAt',
+        //     width: 200,
+        //     sorter: true,
+        //     render: (text, record, index, action) => {
+        //         return (
+        //             <>{dayjs(record.updatedAt).format('DD-MM-YYYY HH:mm:ss')}</>
+        //         )
+        //     },
+        //     hideInSearch: true,
+        // },
         // {
 
         //     title: 'Actions',

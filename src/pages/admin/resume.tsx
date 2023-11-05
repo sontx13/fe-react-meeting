@@ -82,18 +82,18 @@ const ResumePage = () => {
         },
 
         {
-            title: 'Job',
+           title: 'Cuộc họp',
             dataIndex: ["jobId", "name"],
             hideInSearch: true,
         },
         {
-            title: 'Company',
+            title: 'Đơn vị',
             dataIndex: ["companyId", "name"],
             hideInSearch: true,
         },
 
         {
-            title: 'CreatedAt',
+            title: 'Ngày tạo',
             dataIndex: 'createdAt',
             width: 200,
             sorter: true,
@@ -105,7 +105,7 @@ const ResumePage = () => {
             hideInSearch: true,
         },
         {
-            title: 'UpdatedAt',
+            title: 'Ngày sửa',
             dataIndex: 'updatedAt',
             width: 200,
             sorter: true,

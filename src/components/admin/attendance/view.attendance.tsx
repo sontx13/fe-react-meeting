@@ -1,6 +1,6 @@
 import { callUpdateDiemdanh } from "@/config/api";
 import { IAttendance } from "@/types/backend";
-import { Badge, Button, Descriptions, Drawer, Form, Select, message, notification } from "antd";
+import { Badge, Button, Descriptions, Drawer, Form, Select, Tag, message, notification } from "antd";
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 const { Option } = Select;
@@ -61,32 +61,32 @@ const ViewDetailAttendance = (props: IProps) => {
                 // }
             >
                 <Descriptions title="" bordered column={2} layout="vertical">
-                    <Descriptions.Item label="Email">{dataInit?.email}</Descriptions.Item>
-                    <Descriptions.Item label="Trạng thái">
-                        <Form
-                            form={form}
-                        >
-                            <Form.Item name={"status"}>
-                                <Select
-                                    // placeholder="Select a option and change input text above"
-                                    // onChange={onGenderChange}
-                                    // allowClear
-                                    style={{ width: "100%" }}
-                                    defaultValue={dataInit?.status}
-                                >
-                                    <Option value="PENDING">PENDING</Option>
-                                    <Option value="REVIEWING">REVIEWING</Option>
-                                    <Option value="APPROVED">APPROVED</Option>
-                                    <Option value="REJECTED">REJECTED</Option>
-                                </Select>
-                            </Form.Item>
-                        </Form>
-
+                    <Descriptions.Item label="Tên Zalo">
+                        {dataInit?.name}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Tên Job">
+                    <Descriptions.Item label="Access_token">
+                        {dataInit?.access_token}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="code">
+                        {dataInit?.code}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Thời gian tạo">{dataInit && dataInit.timestamp ? dayjs(dataInit.timestamp).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
+                    <Descriptions.Item label="latitude">
+                        {dataInit?.latitude}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="longitude">
+                        {dataInit?.longitude}
+                    </Descriptions.Item>
+                    
+                    <Descriptions.Item label="Trạng thái">
+                        <Tag color={dataInit.isActive ? "lime" : "red"} >
+                             {dataInit.isActive ? "Đã điểm danh" : "Chưa điểm danh"}
+                        </Tag>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Cuộc họp">
                         {dataInit?.jobId?.name}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Tên Công Ty">
+                    <Descriptions.Item label="Đơn vị">
                         {dataInit?.companyId?.name}
                     </Descriptions.Item>
                     <Descriptions.Item label="Ngày tạo">{dataInit && dataInit.createdAt ? dayjs(dataInit.createdAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>

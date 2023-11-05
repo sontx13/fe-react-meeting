@@ -203,7 +203,7 @@ const ModalCompany = (props: IProps) => {
                         <Row gutter={16}>
                             <Col span={24}>
                                 <ProFormText
-                                    label="Tên công ty"
+                                    label="Đơn vị"
                                     name="name"
                                     rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
                                     placeholder="Nhập tên công ty"
