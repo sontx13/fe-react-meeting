@@ -1,50 +1,50 @@
 import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { IResume } from "@/types/backend";
+import { IAttendance } from "@/types/backend";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns, ProFormSelect } from '@ant-design/pro-components';
 import { Button, Popconfirm, Select, Space, Tag, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { callDeleteResume } from "@/config/api";
+import { callDeleteDiemdanh } from "@/config/api";
 import queryString from 'query-string';
 import { useNavigate } from "react-router-dom";
-import { fetchResume } from "@/redux/slice/resumeSlide";
-import ViewDetailResume from "@/components/admin/resume/view.resume";
+import { fetchAttendance } from "@/redux/slice/attendanceSlide";
+import ViewDetailAttendance from "@/components/admin/attendance/view.attendance";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 import Access from "@/components/share/access";
 
-const ResumePage = () => {
+const AttendancePage = () => {
     const tableRef = useRef<ActionType>();
 
-    const isFetching = useAppSelector(state => state.resume.isFetching);
-    const meta = useAppSelector(state => state.resume.meta);
-    const resumes = useAppSelector(state => state.resume.result);
+    const isFetching = useAppSelector(state => state.attendance.isFetching);
+    const meta = useAppSelector(state => state.attendance.meta);
+    const attendances = useAppSelector(state => state.attendance.result);
     const dispatch = useAppDispatch();
 
-    const [dataInit, setDataInit] = useState<IResume | null>(null);
+    const [dataInit, setDataInit] = useState<IAttendance | null>(null);
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
 
-    const handleDeleteResume = async (_id: string | undefined) => {
-        if (_id) {
-            const res = await callDeleteResume(_id);
-            if (res && res.data) {
-                message.success('Xóa Resume thành công');
-                reloadTable();
-            } else {
-                notification.error({
-                    message: 'Có lỗi xảy ra',
-                    description: res.message
-                });
-            }
-        }
-    }
+    // const handleDeleteAttendance = async (_id: string | undefined) => {
+    //     if (_id) {
+    //         const res = await callDeleteDiemdanh(_id);
+    //         if (res && res.data) {
+    //             message.success('Xóa Attendance thành công');
+    //             reloadTable();
+    //         } else {
+    //             notification.error({
+    //                 message: 'Có lỗi xảy ra',
+    //                 description: res.message
+    //             });
+    //         }
+    //     }
+    // }
 
     const reloadTable = () => {
         tableRef?.current?.reload();
     }
 
-    const columns: ProColumns<IResume>[] = [
+    const columns: ProColumns<IAttendance>[] = [
         {
             title: 'Id',
             dataIndex: '_id',
@@ -136,9 +136,9 @@ const ResumePage = () => {
 
         //             <Popconfirm
         //                 placement="leftTop"
-        //                 title={"Xác nhận xóa resume"}
-        //                 description={"Bạn có chắc chắn muốn xóa resume này ?"}
-        //                 onConfirm={() => handleDeleteResume(entity._id)}
+        //                 title={"Xác nhận xóa attendance"}
+        //                 description={"Bạn có chắc chắn muốn xóa attendance này ?"}
+        //                 onConfirm={() => handleDeleteAttendance(entity._id)}
         //                 okText="Xác nhận"
         //                 cancelText="Hủy"
         //             >
@@ -195,16 +195,16 @@ const ResumePage = () => {
             <Access
                 permission={ALL_PERMISSIONS.RESUMES.GET_PAGINATE}
             >
-                <DataTable<IResume>
+                <DataTable<IAttendance>
                     actionRef={tableRef}
-                    headerTitle="Danh sách Tài liệu"
+                    headerTitle="Danh sách Điểm danh"
                     rowKey="_id"
                     loading={isFetching}
                     columns={columns}
-                    dataSource={resumes}
+                    dataSource={attendances}
                     request={async (params, sort, filter): Promise<any> => {
                         const query = buildQuery(params, sort, filter);
-                        dispatch(fetchResume({ query }))
+                        dispatch(fetchAttendance({ query }))
                     }}
                     scroll={{ x: true }}
                     pagination={
@@ -224,7 +224,7 @@ const ResumePage = () => {
                     }}
                 />
             </Access>
-            <ViewDetailResume
+            <ViewDetailAttendance
                 open={openViewDetail}
                 onClose={setOpenViewDetail}
                 dataInit={dataInit}
@@ -235,4 +235,4 @@ const ResumePage = () => {
     )
 }
 
-export default ResumePage;
+export default AttendancePage;

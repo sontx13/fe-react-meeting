@@ -1,32 +1,32 @@
 import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { IJob } from "@/types/backend";
+import { IVote } from "@/types/backend";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns, ProFormSelect } from '@ant-design/pro-components';
 import { Button, Popconfirm, Select, Space, Tag, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { callDeleteJob } from "@/config/api";
+import { callDeleteVote } from "@/config/api";
 import queryString from 'query-string';
 import { useNavigate } from "react-router-dom";
-import { fetchJob } from "@/redux/slice/jobSlide";
+import { fetchVote } from "@/redux/slice/voteSlide";
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 
-const JobPage = () => {
+const VotePage = () => {
     const tableRef = useRef<ActionType>();
 
-    const isFetching = useAppSelector(state => state.job.isFetching);
-    const meta = useAppSelector(state => state.job.meta);
-    const jobs = useAppSelector(state => state.job.result);
+    const isFetching = useAppSelector(state => state.vote.isFetching);
+    const meta = useAppSelector(state => state.vote.meta);
+    const votes = useAppSelector(state => state.vote.result);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const handleDeleteJob = async (_id: string | undefined) => {
+    const handleDeleteVote = async (_id: string | undefined) => {
         if (_id) {
-            const res = await callDeleteJob(_id);
+            const res = await callDeleteVote(_id);
             if (res && res.data) {
-                message.success('Xóa Job thành công');
+                message.success('Xóa Vote thành công');
                 reloadTable();
             } else {
                 notification.error({
@@ -41,7 +41,7 @@ const JobPage = () => {
         tableRef?.current?.reload();
     }
 
-    const columns: ProColumns<IJob>[] = [
+    const columns: ProColumns<IVote>[] = [
         {
             title: 'STT',
             key: 'index',
@@ -65,7 +65,7 @@ const JobPage = () => {
             dataIndex: 'salary',
             sorter: true,
             render(dom, entity, index, action, schema) {
-                const str = "" + entity.salary;
+                const str = "" + entity.question;
                 return <>{str?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} m</>
             },
         },
@@ -93,8 +93,8 @@ const JobPage = () => {
             dataIndex: 'isActive',
             render(dom, entity, index, action, schema) {
                 return <>
-                    <Tag color={entity.isActive ? "lime" : "red"} >
-                        {entity.isActive ? "ACTIVE" : "INACTIVE"}
+                    <Tag color={entity.status ? "lime" : "red"} >
+                        {entity.status ? "ACTIVE" : "INACTIVE"}
                     </Tag>
                 </>
             },
@@ -143,7 +143,7 @@ const JobPage = () => {
                             }}
                             type=""
                             onClick={() => {
-                                navigate(`/admin/job/upsert?id=${entity._id}`)
+                                navigate(`/admin/vote/upsert?id=${entity._id}`)
                             }}
                         />
                     </Access>
@@ -153,9 +153,9 @@ const JobPage = () => {
                     >
                         <Popconfirm
                             placement="leftTop"
-                            title={"Xác nhận xóa job"}
-                            description={"Bạn có chắc chắn muốn xóa job này ?"}
-                            onConfirm={() => handleDeleteJob(entity._id)}
+                            title={"Xác nhận xóa vote"}
+                            description={"Bạn có chắc chắn muốn xóa vote này ?"}
+                            onConfirm={() => handleDeleteVote(entity._id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
@@ -214,16 +214,16 @@ const JobPage = () => {
             <Access
                 permission={ALL_PERMISSIONS.JOBS.GET_PAGINATE}
             >
-                <DataTable<IJob>
+                <DataTable<IVote>
                     actionRef={tableRef}
-                    headerTitle="Danh sách Cuộc họp"
+                    headerTitle="Danh sách Biểu quyết"
                     rowKey="_id"
                     loading={isFetching}
                     columns={columns}
-                    dataSource={jobs}
+                    dataSource={votes}
                     request={async (params, sort, filter): Promise<any> => {
                         const query = buildQuery(params, sort, filter);
-                        dispatch(fetchJob({ query }))
+                        dispatch(fetchVote({ query }))
                     }}
                     scroll={{ x: true }}
                     pagination={
@@ -253,4 +253,4 @@ const JobPage = () => {
     )
 }
 
-export default JobPage;
+export default VotePage;

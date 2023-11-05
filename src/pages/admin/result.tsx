@@ -1,50 +1,50 @@
 import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { IResume } from "@/types/backend";
+import { IResult } from "@/types/backend";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns, ProFormSelect } from '@ant-design/pro-components';
 import { Button, Popconfirm, Select, Space, Tag, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { callDeleteResume } from "@/config/api";
+import { callDeleteResult } from "@/config/api";
 import queryString from 'query-string';
 import { useNavigate } from "react-router-dom";
-import { fetchResume } from "@/redux/slice/resumeSlide";
-import ViewDetailResume from "@/components/admin/resume/view.resume";
+import { fetchResult } from "@/redux/slice/resultSlide";
+import ViewDetailResult from "@/components/admin/result/view.result";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 import Access from "@/components/share/access";
 
-const ResumePage = () => {
+const ResultPage = () => {
     const tableRef = useRef<ActionType>();
 
-    const isFetching = useAppSelector(state => state.resume.isFetching);
-    const meta = useAppSelector(state => state.resume.meta);
-    const resumes = useAppSelector(state => state.resume.result);
+    const isFetching = useAppSelector(state => state.result.isFetching);
+    const meta = useAppSelector(state => state.result.meta);
+    const results = useAppSelector(state => state.result.result);
     const dispatch = useAppDispatch();
 
-    const [dataInit, setDataInit] = useState<IResume | null>(null);
+    const [dataInit, setDataInit] = useState<IResult | null>(null);
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
 
-    const handleDeleteResume = async (_id: string | undefined) => {
-        if (_id) {
-            const res = await callDeleteResume(_id);
-            if (res && res.data) {
-                message.success('Xóa Resume thành công');
-                reloadTable();
-            } else {
-                notification.error({
-                    message: 'Có lỗi xảy ra',
-                    description: res.message
-                });
-            }
-        }
-    }
+    // const handleDeleteResult = async (_id: string | undefined) => {
+    //     if (_id) {
+    //         const res = await callDeleteResult(_id);
+    //         if (res && res.data) {
+    //             message.success('Xóa Result thành công');
+    //             reloadTable();
+    //         } else {
+    //             notification.error({
+    //                 message: 'Có lỗi xảy ra',
+    //                 description: res.message
+    //             });
+    //         }
+    //     }
+    // }
 
     const reloadTable = () => {
         tableRef?.current?.reload();
     }
 
-    const columns: ProColumns<IResume>[] = [
+    const columns: ProColumns<IResult>[] = [
         {
             title: 'Id',
             dataIndex: '_id',
@@ -136,9 +136,9 @@ const ResumePage = () => {
 
         //             <Popconfirm
         //                 placement="leftTop"
-        //                 title={"Xác nhận xóa resume"}
-        //                 description={"Bạn có chắc chắn muốn xóa resume này ?"}
-        //                 onConfirm={() => handleDeleteResume(entity._id)}
+        //                 title={"Xác nhận xóa result"}
+        //                 description={"Bạn có chắc chắn muốn xóa result này ?"}
+        //                 onConfirm={() => handleDeleteResult(entity._id)}
         //                 okText="Xác nhận"
         //                 cancelText="Hủy"
         //             >
@@ -186,7 +186,7 @@ const ResumePage = () => {
             temp = `${temp}&${sortBy}`;
         }
 
-        temp += "&populate=companyId,jobId&fields=companyId._id, companyId.name, companyId.logo, jobId._id, jobId.name";
+        //temp += "&populate=companyId,jobId&fields=companyId._id, companyId.name, companyId.logo, jobId._id, jobId.name";
         return temp;
     }
 
@@ -195,16 +195,16 @@ const ResumePage = () => {
             <Access
                 permission={ALL_PERMISSIONS.RESUMES.GET_PAGINATE}
             >
-                <DataTable<IResume>
+                <DataTable<IResult>
                     actionRef={tableRef}
-                    headerTitle="Danh sách Tài liệu"
+                    headerTitle="Danh sách Kết quả biểu quyết"
                     rowKey="_id"
                     loading={isFetching}
                     columns={columns}
-                    dataSource={resumes}
+                    dataSource={results}
                     request={async (params, sort, filter): Promise<any> => {
                         const query = buildQuery(params, sort, filter);
-                        dispatch(fetchResume({ query }))
+                        dispatch(fetchResult({ query }))
                     }}
                     scroll={{ x: true }}
                     pagination={
@@ -224,7 +224,7 @@ const ResumePage = () => {
                     }}
                 />
             </Access>
-            <ViewDetailResume
+            <ViewDetailResult
                 open={openViewDetail}
                 onClose={setOpenViewDetail}
                 dataInit={dataInit}
@@ -235,4 +235,4 @@ const ResumePage = () => {
     )
 }
 
-export default ResumePage;
+export default ResultPage;

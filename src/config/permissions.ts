@@ -11,6 +11,24 @@ export const ALL_PERMISSIONS = {
         UPDATE: { method: "PATCH", apiPath: '/api/v1/jobs/:id', module: "JOBS" },
         DELETE: { method: "DELETE", apiPath: '/api/v1/jobs/:id', module: "JOBS" },
     },
+    VOTES: {
+        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/votes', module: "VOTES" },
+        CREATE: { method: "POST", apiPath: '/api/v1/votes', module: "VOTES" },
+        UPDATE: { method: "PATCH", apiPath: '/api/v1/votes/:id', module: "VOTES" },
+        DELETE: { method: "DELETE", apiPath: '/api/v1/votes/:id', module: "VOTES" },
+    },
+    RESULTS: {
+        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/results', module: "RESULTS" },
+        CREATE: { method: "POST", apiPath: '/api/v1/results', module: "RESULTS" },
+        UPDATE: { method: "PATCH", apiPath: '/api/v1/results/:id', module: "RESULTS" },
+        DELETE: { method: "DELETE", apiPath: '/api/v1/results/:id', module: "RESULTS" },
+    },
+    ATTENDANCE: {
+        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/attendances', module: "ATTENDANCE" },
+        CREATE: { method: "POST", apiPath: '/api/v1/attendances', module: "ATTENDANCE" },
+        UPDATE: { method: "PATCH", apiPath: '/api/v1/attendances/:id', module: "ATTENDANCE" },
+        DELETE: { method: "DELETE", apiPath: '/api/v1/attendances/:id', module: "ATTENDANCE" },
+    },
     PERMISSIONS: {
         GET_PAGINATE: { method: "GET", apiPath: '/api/v1/permissions', module: "PERMISSIONS" },
         CREATE: { method: "POST", apiPath: '/api/v1/permissions', module: "PERMISSIONS" },

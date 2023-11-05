@@ -196,7 +196,7 @@ const CompanyPage = () => {
             >
                 <DataTable<ICompany>
                     actionRef={tableRef}
-                    headerTitle="Danh sách Công Ty"
+                    headerTitle="Danh sách Đơn vị"
                     rowKey="_id"
                     loading={isFetching}
                     columns={columns}

@@ -128,6 +128,62 @@ export interface IResume {
     updatedAt?: string;
 }
 
+
+export interface IVote {
+    _id?: string;
+    question: string;
+    status: string;
+    companyId: string;
+    jobId: string;
+    createdBy?: string;
+    isDeleted?: boolean;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+
+export interface IResult {
+    _id?: string;
+    answer: string;
+    phone: string;
+    token: string;
+    access_token: string;
+    name: string;
+    voteId: string;
+    createdBy?: string;
+    isDeleted?: boolean;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+
+export interface IAttendance {
+    _id?: string;
+    name: string;
+    access_token: string;
+    code: string;
+    latitude: string;
+    longitude: string;
+    isActive: boolean;
+    timestamp: string;
+    companyId: string | {
+        _id: string;
+        name: string;
+        logo: string;
+    };
+    jobId: string | {
+        _id: string;
+        name: string;
+    };
+    createdBy?: string;
+    isDeleted?: boolean;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
 export interface IPermission {
     _id?: string;
     name?: string;

@@ -8,6 +8,9 @@ import companyReducer from './slice/companySlide';
 import userReducer from './slice/userSlide';
 import jobReducer from './slice/jobSlide';
 import resumeReducer from './slice/resumeSlide';
+import voteReducer from './slice/voteSlide';
+import resultReducer from './slice/resultSlide';
+import attendanceReducer from './slice/attendanceSlide';
 import permissionReducer from './slice/permissionSlide';
 import roleReducer from './slice/roleSlide';
 
@@ -18,6 +21,9 @@ export const store = configureStore({
     user: userReducer,
     job: jobReducer,
     resume: resumeReducer,
+    vote: voteReducer,
+    result: resultReducer,
+    attendance: attendanceReducer,
     permission: permissionReducer,
     role: roleReducer
   },

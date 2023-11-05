@@ -30,6 +30,9 @@ import ClientJobPage from './pages/job';
 import ClientJobDetailPage from './pages/job/detail';
 import ClientCompanyPage from './pages/company';
 import ClientCompanyDetailPage from './pages/company/detail';
+import VotePage from './pages/admin/vote';
+import ResultPage from './pages/admin/result';
+import AttendancePage from './pages/admin/attendance';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -121,12 +124,32 @@ export default function App() {
             }
           ]
         },
-
         {
           path: "resume",
           element:
             <ProtectedRoute>
               <ResumePage />
+            </ProtectedRoute>
+        },
+        {
+          path: "vote",
+          element:
+            <ProtectedRoute>
+              <VotePage />
+            </ProtectedRoute>
+        },
+        {
+          path: "result",
+          element:
+            <ProtectedRoute>
+              <ResultPage />
+            </ProtectedRoute>
+        },
+        {
+          path: "attendance",
+          element:
+            <ProtectedRoute>
+              <AttendancePage />
             </ProtectedRoute>
         },
         {

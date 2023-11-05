@@ -1,4 +1,4 @@
-import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISubscribers } from '@/types/backend';
+import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISubscribers, IAttendance, IResult, IVote } from '@/types/backend';
 import axios from 'config/axios-customize';
 
 /**
@@ -141,6 +141,93 @@ export const callFetchResumeById = (id: string) => {
 export const callFetchResumeByUser = () => {
     return axios.post<IBackendRes<IResume[]>>(`/api/v1/resumes/by-user`);
 }
+
+/**
+ * 
+Module Attendance
+ */
+export const callCreateDiemdanh = (attendance: IAttendance) => {
+    return axios.post<IBackendRes<IAttendance>>('/api/v1/attendances', { ...attendance })
+}
+
+export const callUpdateDiemdanh = (attendance: IAttendance, id: string) => {
+    return axios.patch<IBackendRes<IAttendance>>(`/api/v1/attendances/${id}`, { ...attendance })
+}
+
+export const callDeleteDiemdanh= (id: string) => {
+    return axios.delete<IBackendRes<IAttendance>>(`/api/v1/attendances/${id}`);
+}
+
+export const callFetchDiemdanh = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IAttendance>>>(`/api/v1/attendances?${query}`);
+}
+
+export const callFetchDDById = (id: string) => {
+    return axios.get<IBackendRes<IAttendance>>(`/api/v1/attendances/${id}`);
+}
+
+export const callFetchDiemdanhByJob = () => {
+    return axios.post<IBackendRes<IAttendance[]>>(`/api/v1/attendances/by-job`);
+}
+
+
+/**
+ * 
+Module Result
+ */
+export const callCreateResult = (result: IResult) => {
+    return axios.post<IBackendRes<IResult>>('/api/v1/results', { ...result })
+}
+
+export const callUpdateResult = (result: IResult, id: string) => {
+    return axios.patch<IBackendRes<IResult>>(`/api/v1/results/${id}`, { ...result })
+}
+
+export const callDeleteResult= (id: string) => {
+    return axios.delete<IBackendRes<IResult>>(`/api/v1/results/${id}`);
+}
+
+export const callFetchResult = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IResult>>>(`/api/v1/results?${query}`);
+}
+
+export const callFetchResultById = (id: string) => {
+    return axios.get<IBackendRes<IResult>>(`/api/v1/results/${id}`);
+}
+
+export const callFetchResultByVote = () => {
+    return axios.post<IBackendRes<IResult[]>>(`/api/v1/results/by-vote`);
+}
+
+
+/**
+ * 
+Module Vote
+ */
+export const callCreateVote = (vote: IVote) => {
+    return axios.post<IBackendRes<IVote>>('/api/v1/votes', { ...vote })
+}
+
+export const callUpdateVote = (vote: IVote, id: string) => {
+    return axios.patch<IBackendRes<IVote>>(`/api/v1/votes/${id}`, { ...vote })
+}
+
+export const callDeleteVote= (id: string) => {
+    return axios.delete<IBackendRes<IVote>>(`/api/v1/votes/${id}`);
+}
+
+export const callFetchVote = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IVote>>>(`/api/v1/votes?${query}`);
+}
+
+export const callFetchVoteById = (id: string) => {
+    return axios.get<IBackendRes<IVote>>(`/api/v1/votes/${id}`);
+}
+
+export const callFetchVoteByJob= () => {
+    return axios.post<IBackendRes<IVote[]>>(`/api/v1/votes/by-job`);
+}
+
 
 /**
  * 

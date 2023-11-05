@@ -12,6 +12,9 @@ import {
     HeartTwoTone,
     BugOutlined,
     ScheduleOutlined,
+    EnvironmentOutlined,
+    CommentOutlined,
+    SolutionOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Dropdown, Space, message, Avatar, Button } from 'antd';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -60,6 +63,21 @@ const LayoutAdmin = () => {
                 && item.method === ALL_PERMISSIONS.RESUMES.GET_PAGINATE.method
             )
 
+            const viewVote = permissions.find(item =>
+                item.apiPath === ALL_PERMISSIONS.VOTES.GET_PAGINATE.apiPath
+                && item.method === ALL_PERMISSIONS.VOTES.GET_PAGINATE.method
+            )
+
+            const viewResult = permissions.find(item =>
+                item.apiPath === ALL_PERMISSIONS.RESULTS.GET_PAGINATE.apiPath
+                && item.method === ALL_PERMISSIONS.RESULTS.GET_PAGINATE.method
+            )
+
+            const viewAttendance= permissions.find(item =>
+                item.apiPath === ALL_PERMISSIONS.ATTENDANCE.GET_PAGINATE.apiPath
+                && item.method === ALL_PERMISSIONS.ATTENDANCE.GET_PAGINATE.method
+            )
+
             const viewRole = permissions.find(item =>
                 item.apiPath === ALL_PERMISSIONS.ROLES.GET_PAGINATE.apiPath
                 && item.method === ALL_PERMISSIONS.ROLES.GET_PAGINATE.method
@@ -97,6 +115,21 @@ const LayoutAdmin = () => {
                     label: <Link to='/admin/resume'>Tài liệu</Link>,
                     key: '/admin/resume',
                     icon: <AliwangwangOutlined />
+                }] : []),
+                 ...(viewAttendance ? [{
+                    label: <Link to='/admin/attendance'>Điểm danh</Link>,
+                    key: '/admin/attendance',
+                    icon: <EnvironmentOutlined />
+                }] : []),
+                 ...(viewVote ? [{
+                    label: <Link to='/admin/vote'>Biểu quyết</Link>,
+                    key: '/admin/vote',
+                    icon: <CommentOutlined />
+                }] : []),
+                 ...(viewResult ? [{
+                    label: <Link to='/admin/result'>Kết quả</Link>,
+                    key: '/admin/result',
+                    icon: <SolutionOutlined />
                 }] : []),
                 ...(viewPermission ? [{
                     label: <Link to='/admin/permission'>Permission</Link>,
