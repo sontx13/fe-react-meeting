@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchVote } from "@/redux/slice/voteSlide";
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
+import ViewDetailVote from "@/components/admin/vote/view.vote";
 
 const VotePage = () => {
     const tableRef = useRef<ActionType>();
@@ -21,6 +22,9 @@ const VotePage = () => {
     const votes = useAppSelector(state => state.vote.result);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
+    const [dataInit, setDataInit] = useState<IVote | null>(null);
+    const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
 
     const handleDeleteVote = async (_id: string | undefined) => {
         if (_id) {
@@ -47,11 +51,15 @@ const VotePage = () => {
             key: 'index',
             width: 50,
             align: "center",
-            render: (text, record, index) => {
+            render: (text, record, index, action) => {
                 return (
-                    <>
-                        {(index + 1) + (meta.current - 1) * (meta.pageSize)}
-                    </>)
+                    <a href="#" onClick={() => {
+                        setOpenViewDetail(true);
+                        setDataInit(record);
+                    }}>
+                        {record._id}
+                    </a>
+                )
             },
             hideInSearch: true,
         },
@@ -59,16 +67,31 @@ const VotePage = () => {
             title: 'Câu hỏi',
             dataIndex: 'question',
             sorter: true,
+           
         },
         {
             title: 'Trạng thái',
             dataIndex: 'status',
             render(dom, entity, index, action, schema) {
-                return <>
-                    <Tag color={entity.status ? "lime" : "red"} >
-                        {entity.status ? "ACTIVE" : "INACTIVE"}
-                    </Tag>
-                </>
+                {if (entity.status =="PENDING") {
+                    return <>
+                        <Tag color={"blue" } >{"PENDING"}</Tag>
+                    </>
+                }else if(entity.status =="REVIEWING"){
+                    return <>
+                        <Tag color={"lime" } >{"REVIEWING"}</Tag>
+                    </>
+                }else if(entity.status =="APPROVED"){
+                    return <>
+                        <Tag color={"yellow" } >{"APPROVED"}</Tag>
+                    </>
+                }else {
+                    return <>
+                        <Tag color={"red" } >{"REJECTED"}</Tag>
+                    </>
+                }
+                }
+               
             },
             hideInSearch: true,
         },
@@ -114,7 +137,7 @@ const VotePage = () => {
             width: 50,
             render: (_value, entity, _index, _action) => (
                 <Space>
-                    <Access
+                    {/* <Access
                         permission={ALL_PERMISSIONS.JOBS.UPDATE}
                         hideChildren
                     >
@@ -128,7 +151,7 @@ const VotePage = () => {
                                 navigate(`/admin/vote/upsert?id=${entity._id}`)
                             }}
                         />
-                    </Access>
+                    </Access> */}
                     <Access
                         permission={ALL_PERMISSIONS.JOBS.DELETE}
                         hideChildren
@@ -151,6 +174,13 @@ const VotePage = () => {
                             </span>
                         </Popconfirm>
                     </Access>
+                     <ViewDetailVote
+                        open={openViewDetail}
+                        onClose={setOpenViewDetail}
+                        dataInit={dataInit}
+                        setDataInit={setDataInit}
+                        reloadTable={reloadTable}
+                    />
                 </Space>
             ),
 

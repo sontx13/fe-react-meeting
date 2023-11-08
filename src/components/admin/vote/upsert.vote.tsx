@@ -88,7 +88,7 @@ const ViewUpsertVote = (props: any) => {
             }
              console.log(vote);
 
-            const res = await callUpdateVote(vote, dataUpdate._id);
+            const res = await callUpdateVote(values.status, dataUpdate._id);
             if (res.data) {
                 message.success("Cập nhật vote thành công");
                 navigate('/admin/vote')
@@ -223,7 +223,7 @@ const ViewUpsertVote = (props: any) => {
 
                                 </Col>
                             }
-                            <Col span={24} md={6}>
+                            {/* <Col span={24} md={6}>
                                 <ProFormSwitch
                                     label="Trạng thái"
                                     name="status"
@@ -234,7 +234,7 @@ const ViewUpsertVote = (props: any) => {
                                         defaultChecked: true,
                                     }}
                                 />
-                            </Col>
+                            </Col> */}
                         </Row>
                         
                         <Divider />

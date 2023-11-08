@@ -208,8 +208,8 @@ export const callCreateVote = (vote: IVote) => {
     return axios.post<IBackendRes<IVote>>('/api/v1/votes', { ...vote })
 }
 
-export const callUpdateVote = (vote: IVote, id: string) => {
-    return axios.patch<IBackendRes<IVote>>(`/api/v1/votes/${id}`, { ...vote })
+export const callUpdateVote = (status: string, id: string) => {
+    return axios.patch<IBackendRes<IVote>>(`/api/v1/votes/${id}`, { status })
 }
 
 export const callDeleteVote= (id: string) => {

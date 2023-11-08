@@ -81,6 +81,23 @@ const ResultPage = () => {
         {
             title: 'Câu trả lời',
             dataIndex: 'answer',
+            render(dom, entity, index, action, schema) {
+                {if (entity.answer =="yes") {
+                    return <>
+                        <Tag color={"blue" } >{"Đồng ý"}</Tag>
+                    </>
+                }else if(entity.answer =="no"){
+                    return <>
+                        <Tag color={"red" } >{"Không đồng ý"}</Tag>
+                    </>
+                }else {
+                    return <>
+                        <Tag color={"lime" } >{"Không chọn"}</Tag>
+                    </>
+                }
+                }
+               
+            },
             sorter: true,
         },
         {
