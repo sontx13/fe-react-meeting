@@ -21,6 +21,7 @@ const ResumePage = () => {
     const meta = useAppSelector(state => state.resume.meta);
     const resumes = useAppSelector(state => state.resume.result);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [dataInit, setDataInit] = useState<IResume | null>(null);
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
@@ -80,7 +81,22 @@ const ResumePage = () => {
                 />
             ),
         },
-
+        {
+            title: 'File',
+            dataIndex: 'url',
+            width: 250,
+            render: (text, record, index, action) => {
+               const link = `${import.meta.env.VITE_BACKEND_URL}/images/resume/${record.url}`;
+                return (
+                    <a onClick={() => {
+                       window.open(link);
+                    }}>
+                        {record.url}
+                    </a>
+                )
+            },
+            hideInSearch: true,
+        },
         {
            title: 'Cuộc họp',
             dataIndex: ["jobId", "name"],
@@ -116,45 +132,46 @@ const ResumePage = () => {
             },
             hideInSearch: true,
         },
-        // {
+        {
 
-        //     title: 'Actions',
-        //     hideInSearch: true,
-        //     width: 50,
-        //     render: (_value, entity, _index, _action) => (
-        //         <Space>
-        //             <EditOutlined
-        //                 style={{
-        //                     fontSize: 20,
-        //                     color: '#ffa500',
-        //                 }}
-        //                 type=""
-        //                 onClick={() => {
-        //                     navigate(`/admin/job/upsert?id=${entity._id}`)
-        //                 }}
-        //             />
+            title: 'Actions',
+            hideInSearch: true,
+            width: 50,
+            render: (_value, entity, _index, _action) => (
+                <Space>
+                    {/* <EditOutlined
+                        style={{
+                            fontSize: 20,
+                            color: '#ffa500',
+                        }}
+                        type=""
+                
+                        onClick={() => {
+                            navigate(`/admin/resume/upsert?id=${entity._id}`)
+                        }}
+                    /> */}
 
-        //             <Popconfirm
-        //                 placement="leftTop"
-        //                 title={"Xác nhận xóa resume"}
-        //                 description={"Bạn có chắc chắn muốn xóa resume này ?"}
-        //                 onConfirm={() => handleDeleteResume(entity._id)}
-        //                 okText="Xác nhận"
-        //                 cancelText="Hủy"
-        //             >
-        //                 <span style={{ cursor: "pointer", margin: "0 10px" }}>
-        //                     <DeleteOutlined
-        //                         style={{
-        //                             fontSize: 20,
-        //                             color: '#ff4d4f',
-        //                         }}
-        //                     />
-        //                 </span>
-        //             </Popconfirm>
-        //         </Space>
-        //     ),
+                    <Popconfirm
+                        placement="leftTop"
+                        title={"Xác nhận xóa resume"}
+                        description={"Bạn có chắc chắn muốn xóa resume này ?"}
+                        onConfirm={() => handleDeleteResume(entity._id)}
+                        okText="Xác nhận"
+                        cancelText="Hủy"
+                    >
+                        <span style={{ cursor: "pointer", margin: "0 10px" }}>
+                            <DeleteOutlined
+                                style={{
+                                    fontSize: 20,
+                                    color: '#ff4d4f',
+                                }}
+                            />
+                        </span>
+                    </Popconfirm>
+                </Space>
+            ),
 
-        // },
+        },
     ];
 
     const buildQuery = (params: any, sort: any, filter: any) => {
@@ -219,7 +236,18 @@ const ResumePage = () => {
                     rowSelection={false}
                     toolBarRender={(_action, _rows): any => {
                         return (
-                            <></>
+                           <Access
+                                permission={ALL_PERMISSIONS.COMPANIES.CREATE}
+                                hideChildren
+                            >
+                                  <Button
+                                    icon={<PlusOutlined />}
+                                    type="primary"
+                                    onClick={() => navigate('upsert')}
+                                >
+                                    Thêm mới
+                                </Button>
+                            </Access>
                         );
                     }}
                 />
@@ -231,6 +259,7 @@ const ResumePage = () => {
                 setDataInit={setDataInit}
                 reloadTable={reloadTable}
             />
+           
         </div>
     )
 }

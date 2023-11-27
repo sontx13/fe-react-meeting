@@ -34,6 +34,7 @@ import VotePage from './pages/admin/vote';
 import ViewUpsertVote from './components/admin/vote/upsert.vote';
 import ResultPage from './pages/admin/result';
 import AttendancePage from './pages/admin/attendance';
+import ViewUpsertResume from './components/admin/resume/upsert.resume';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -127,10 +128,16 @@ export default function App() {
         },
         {
           path: "resume",
-          element:
-            <ProtectedRoute>
-              <ResumePage />
-            </ProtectedRoute>
+          children: [
+            {
+              index: true,
+              element: <ProtectedRoute> <ResumePage /></ProtectedRoute>
+            },
+            {
+              path: "upsert", element:
+                <ProtectedRoute><ViewUpsertResume /></ProtectedRoute>
+            }
+          ]
         },
         {
           path: "vote",

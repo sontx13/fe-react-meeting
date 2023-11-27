@@ -126,6 +126,10 @@ export const callUpdateResumeStatus = (id: any, status: string) => {
     return axios.patch<IBackendRes<IResume>>(`/api/v1/resumes/${id}`, { status })
 }
 
+export const callUpdateResume = (id: any, status: string) => {
+    return axios.patch<IBackendRes<IResume>>(`/api/v1/resumes/${id}`, { status })
+}
+
 export const callDeleteResume = (id: string) => {
     return axios.delete<IBackendRes<IResume>>(`/api/v1/resumes/${id}`);
 }
