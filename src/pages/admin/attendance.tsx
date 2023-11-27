@@ -25,20 +25,20 @@ const AttendancePage = () => {
     const [dataInit, setDataInit] = useState<IAttendance | null>(null);
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
 
-    // const handleDeleteAttendance = async (_id: string | undefined) => {
-    //     if (_id) {
-    //         const res = await callDeleteDiemdanh(_id);
-    //         if (res && res.data) {
-    //             message.success('Xóa Attendance thành công');
-    //             reloadTable();
-    //         } else {
-    //             notification.error({
-    //                 message: 'Có lỗi xảy ra',
-    //                 description: res.message
-    //             });
-    //         }
-    //     }
-    // }
+    const handleDeleteAttendance = async (_id: string | undefined) => {
+        if (_id) {
+            const res = await callDeleteDiemdanh(_id);
+            if (res && res.data) {
+                message.success('Xóa Attendance thành công');
+                reloadTable();
+            } else {
+                notification.error({
+                    message: 'Có lỗi xảy ra',
+                    description: res.message
+                });
+            }
+        }
+    }
 
     const reloadTable = () => {
         tableRef?.current?.reload();
@@ -101,7 +101,11 @@ const AttendancePage = () => {
             },
             hideInSearch: true,
         },
-
+        {
+           title: 'Cuộc họp',
+            dataIndex: ["jobId", "name"],
+            hideInSearch: true,
+        },
         {
             title: 'Đơn vị',
             dataIndex: ["companyId", "name"],
@@ -132,45 +136,45 @@ const AttendancePage = () => {
         //     },
         //     hideInSearch: true,
         // },
-        // {
+        {
 
-        //     title: 'Actions',
-        //     hideInSearch: true,
-        //     width: 50,
-        //     render: (_value, entity, _index, _action) => (
-        //         <Space>
-        //             <EditOutlined
-        //                 style={{
-        //                     fontSize: 20,
-        //                     color: '#ffa500',
-        //                 }}
-        //                 type=""
-        //                 onClick={() => {
-        //                     navigate(`/admin/job/upsert?id=${entity._id}`)
-        //                 }}
-        //             />
+            title: 'Actions',
+            hideInSearch: true,
+            width: 50,
+            render: (_value, entity, _index, _action) => (
+                <Space>
+                    {/* <EditOutlined
+                        style={{
+                            fontSize: 20,
+                            color: '#ffa500',
+                        }}
+                        type=""
+                        onClick={() => {
+                            navigate(`/admin/job/upsert?id=${entity._id}`)
+                        }}
+                    /> */}
 
-        //             <Popconfirm
-        //                 placement="leftTop"
-        //                 title={"Xác nhận xóa attendance"}
-        //                 description={"Bạn có chắc chắn muốn xóa attendance này ?"}
-        //                 onConfirm={() => handleDeleteAttendance(entity._id)}
-        //                 okText="Xác nhận"
-        //                 cancelText="Hủy"
-        //             >
-        //                 <span style={{ cursor: "pointer", margin: "0 10px" }}>
-        //                     <DeleteOutlined
-        //                         style={{
-        //                             fontSize: 20,
-        //                             color: '#ff4d4f',
-        //                         }}
-        //                     />
-        //                 </span>
-        //             </Popconfirm>
-        //         </Space>
-        //     ),
+                    <Popconfirm
+                        placement="leftTop"
+                        title={"Xác nhận xóa attendance"}
+                        description={"Bạn có chắc chắn muốn xóa attendance này ?"}
+                        onConfirm={() => handleDeleteAttendance(entity._id)}
+                        okText="Xác nhận"
+                        cancelText="Hủy"
+                    >
+                        <span style={{ cursor: "pointer", margin: "0 10px" }}>
+                            <DeleteOutlined
+                                style={{
+                                    fontSize: 20,
+                                    color: '#ff4d4f',
+                                }}
+                            />
+                        </span>
+                    </Popconfirm>
+                </Space>
+            ),
 
-        // },
+        },
     ];
 
     const buildQuery = (params: any, sort: any, filter: any) => {
